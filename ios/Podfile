@@ -36,6 +36,8 @@ target 'sihattendance' do
 
   pod 'RNAudioRecord', :path => '../node_modules/react-native-audio-record'
 
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
   target 'sihattendanceTests' do
     inherit! :search_paths
     # Pods for testing

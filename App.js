@@ -6,10 +6,10 @@
  * @flow
  */
 
-import React,{Component} from 'react';
-import Audiorec from "./container/audiorec"
-import Location from "./container/location"
-import Pic from "./container/photo"
+import React, {Component} from 'react';
+import Audiorec from './container/audiorec';
+import Location from './container/location';
+import Pic from './container/photo';
 import {
   SafeAreaView,
   StyleSheet,
@@ -27,22 +27,19 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {createSwitchNavigator, createAppContainer} from 'react-navigation'
+import {createSwitchNavigator, createAppContainer} from 'react-navigation';
 
 const AppSwitchNavigator = createSwitchNavigator({
+  Pic: {screen: Pic},
   Audiorec: {screen: Audiorec},
-  Pic: {screen: Pic },
-  Loc : {screen: Location},
+  Loc: {screen: Location},
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
 
-class App extends Component{
-
-  render(){
-    return(
-      <AppContainer />
-    )
+class App extends Component {
+  render() {
+    return <AppContainer />;
   }
 }
 

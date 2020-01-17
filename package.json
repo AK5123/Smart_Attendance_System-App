@@ -14,7 +14,9 @@
     "react-native": "0.61.5",
     "react-native-audio-record": "^0.2.2",
     "react-native-camera": "^3.15.1",
+    "react-native-geolocation-service": "^3.1.0",
     "react-native-gesture-handler": "^1.5.3",
+    "react-native-permissions": "^2.0.9",
     "react-navigation": "^4.0.10"
   },
   "devDependencies": {

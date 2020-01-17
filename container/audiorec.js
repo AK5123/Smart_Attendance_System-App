@@ -43,8 +43,11 @@ export default class Audio extends Component{
           });
         }
     }
+
+
     
     componentDidMount(){
+  
         console.log(this.options);
         AudioRecord.init(this.options);
     }

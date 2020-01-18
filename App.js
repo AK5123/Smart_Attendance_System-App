@@ -9,6 +9,8 @@
 import React, {Component} from 'react';
 import Audiorec from './container/audiorec';
 import Location from './container/location';
+import Home from './container/home';
+import Attendance from './container/attendance';
 import Pic from './container/photo';
 import {
   SafeAreaView,
@@ -31,6 +33,8 @@ import {createSwitchNavigator, createAppContainer} from 'react-navigation';
 import {check, PERMISSIONS, request} from 'react-native-permissions';
 
 const AppSwitchNavigator = createSwitchNavigator({
+  Home: {screen: Home},
+  Attendance: {screen: Attendance},
   Loc: {screen: Location},
   Pic: {screen: Pic},
   Audiorec: {screen: Audiorec},

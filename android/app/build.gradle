@@ -184,6 +184,9 @@ dependencies {
     implementation project(':react-native-audio-record')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.facebook.fresco:animated-gif:2.0.0'
+    // compile 'com.facebook.fresco:fresco:1.+'
+    // compile 'com.facebook.fresco:animated-gif:1.+'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

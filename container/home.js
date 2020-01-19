@@ -32,7 +32,7 @@ export default class Home extends Component{
     }
 
     handleRoute = (val) => {
-        this.props.navigation.navigate(val)
+        this.props.navigation.navigate(val,{val:false})
     }
 
     render(){

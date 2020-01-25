@@ -25,7 +25,7 @@ export default class Toolbar extends React.Component {
             <Button onPress={this.props.onCapture} title="capture" />
           </View>
           <View style={styles.alignCenter}>
-            <Button onPress={this.props.switchCam} title="Switchh" />
+            <Button onPress={this.props.switchCam} title="Switch" />
           </View>
         </View>
       </View>

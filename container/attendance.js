@@ -22,7 +22,7 @@ export default class Attendance extends Component {
     return (
       <View style={styles.attend}>
         <Image style={styles.tick} source={require('../assets/correct.png')} />
-        <Text style={{fontSize: 30, fontWeight: 'bold', width: '100%'}}>
+        <Text style={{fontSize: 30, fontWeight: 'bold', width: '100%',textAlign:'center'}}>
           {' '}
           Attendance recorded{' '}
         </Text>
@@ -119,6 +119,7 @@ const styles = {
     flex: 1,
     width: '100%',
     backgroundColor: 'red',
+    textAlign:'center'
   },
   voicebtn: {
     justifyContent: 'space-around',

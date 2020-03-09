@@ -16,6 +16,7 @@ import AudioRecord from 'react-native-audio-record';
 import {Buffer} from 'buffer';
 import RNFS from 'react-native-fs';
 import Geolocation from 'react-native-geolocation-service';
+// var RNFS = require('react-native-fs');
 
 export default class Audio extends Component {
   state = {
@@ -112,6 +113,91 @@ export default class Audio extends Component {
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
+  };
+
+  checkStatus1 = () => {
+    var uploadUrl =
+      'https://westus.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US';
+    var files = [
+      {
+        name: 'test',
+        filename: 'test.wav',
+        filepath: this.state.fileloc,
+        filetype: 'audio/wav',
+      },
+    ];
+
+    var uploadBegin = response => {
+      var jobId = response.jobId;
+      console.log('UPLOAD HAS BEGUN! JobId: ' + jobId);
+    };
+
+    var uploadProgress = response => {
+      var percentage = Math.floor(
+        (response.totalBytesSent / response.totalBytesExpectedToSend) * 100,
+      );
+      console.log('UPLOAD IS ' + percentage + '% DONE!');
+    };
+
+    // upload files
+    RNFS.uploadFiles({
+      toUrl: uploadUrl,
+      files: files,
+      method: 'POST',
+      headers: {
+        Host: 'westus.stt.speech.microsoft.com',
+        'Content-Type': 'application/octet-stream',
+        'Content-Disposition': 'attachment;filename="test.wav"',
+        Accept: 'application/json',
+        'Ocp-Apim-Subscription-Key': 'b32ce6ab77e14591aac2646405775cdf',
+      },
+      begin: uploadBegin,
+      progress: uploadProgress,
+    })
+      .promise.then(response => {
+        if (response.statusCode == 200) {
+          console.log('FILES UPLOADED!'); // response.statusCode, response.headers, response.body
+          console.log(response.body);
+        } else {
+          console.log('SERVER ERROR');
+        }
+      })
+      .catch(err => {
+        if (err.description === 'cancelled') {
+          // cancelled by user
+        }
+        console.log(err);
+      });
+  };
+
+  checkStatus = () => {
+    var myHeaders = new Headers();
+    myHeaders.append('Host', 'westus.stt.speech.microsoft.com');
+    myHeaders.append('Content-Type', 'application/octet-stream');
+    myHeaders.append('Content-Disposition', 'attachment;filename="test.wav"');
+    myHeaders.append('Accept', 'application/json');
+    myHeaders.append(
+      'Ocp-Apim-Subscription-Key',
+      'b32ce6ab77e14591aac2646405775cdf',
+    );
+
+    RNFS.readFile(this.state.fileloc, 'utf8').then(res => {
+      var file = res;
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: file,
+        redirect: 'follow',
+      };
+
+      fetch(
+        'https://westus.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US',
+        requestOptions,
+      )
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    });
   };
 
   giveAttendance = async () => {
@@ -216,7 +302,7 @@ export default class Audio extends Component {
     return null;
   };
   render() {
-    // console.log("hey")
+    console.log('hi', RNFS.DocumentDirectoryPath);
     return (
       <View style={styles.body}>
         <View style={styles.header}>
@@ -291,9 +377,7 @@ export default class Audio extends Component {
             <Text>{this.state.toPrint}</Text>
           </View>
           <View>
-            <TouchableOpacity
-              onPress={this.giveAttendance}
-              style={styles.proceed}>
+            <TouchableOpacity onPress={this.checkStatus} style={styles.proceed}>
               <Text style={{color: '#FF6347'}}>Proceed</Text>
               <View>{this.renderResult()}</View>
             </TouchableOpacity>

@@ -11,37 +11,16 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
+import Axios from 'axios';
 
 export default class Home extends Component {
   state = {
-    uid: 'Enter uid',
     eid: null,
-  };
-
-  handleText = text => {
-    if (text.slice(0, text.length - 1) == 'search here!!') {
-      this.setState({
-        uid: '' + text.slice(text.length - 1, text.length),
-      });
-    } else {
-      this.setState({
-        uid: text,
-      });
-    }
+    id:"b32ce6ab77e14591aac2646405775cdf",
   };
 
   handleRoute = val => {
-    // var currentOffset = date.getTimezoneOffset();
-    // var ISTOffset = 330; // IST offset UTC +5:30
-    // var ISTTime = new Date(
-    //   date.getTime() + (ISTOffset + currentOffset) * 60000,
-    // );
-    // var hoursIST = ISTTime.getHours();
-    // var minutesIST = ISTTime.getMinutes();
-    // var dt = `${hoursIST}:${minutesIST}`;
-
-    // // ("<b>" + hoursIST + ":" + minutesIST + " " + "</b>")
-    // console.log(date);
+    
     this.props.navigation.navigate(val, {val: false, eid: this.state.eid});
   };
 

@@ -29,6 +29,8 @@ export default class Audio extends Component {
     long: 0.0,
     result: -1,
     eid: null,
+    sentance:"",
+    id:"b32ce6ab77e14591aac2646405775cdf",
   };
   options = {
     sampleRate: 16000, // default 44100
@@ -65,6 +67,7 @@ export default class Audio extends Component {
 
   stopreco = async () => {
     // AudioRecord.stop();
+    this.renderSentence();
     if (this.state.recording) {
       let audioFile = await AudioRecord.stop();
       console.log('stop', audioFile);
@@ -115,6 +118,7 @@ export default class Audio extends Component {
       .catch(error => console.log('error', error));
   };
 
+<<<<<<< HEAD
   checkStatus1 = () => {
     var uploadUrl =
       'https://westus.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US';
@@ -200,6 +204,50 @@ export default class Audio extends Component {
     });
   };
 
+=======
+  checkStatus = () => {
+    // var form = new FormData();
+    // form.append("body",{
+    //   name: 'test.wav',
+    //   type: 'audio/wav',
+    //   uri: 'file://' + this.state.fileloc,
+    // });
+
+    // var config = {
+    //   headers: {
+    //     "Ocp-Apim-Subscription-Key": this.state.id,
+    //     "Host": "westus.stt.speech.microsoft.com",
+    //     "Content-type": "audio/wav",
+    //     "Accept": "application/json",
+    //   }
+    // }
+    
+    // axios.post("https://westus.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US",form,config).then(val => {
+    //     console.log("in",val.data);
+    // }).catch(e => console.log(e))
+
+    var myHeaders = new Headers();
+    myHeaders.append("Ocp-Apim-Subscription-Key", "b32ce6ab77e14591aac2646405775cdf");
+    myHeaders.append("Host", "westus.stt.speech.microsoft.com");
+    myHeaders.append("Content-Type", "audio/wav");
+    myHeaders.append("Accept", "application/json");
+
+    var file = "<file contents here>";
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: file,
+      redirect: 'follow'
+    };
+
+    fetch("https://westus.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+
+  }
+>>>>>>> 589ba44ad3531012d86ca022a2fbf913d31636c6
   giveAttendance = async () => {
     // var file = await RNFS.readFile(this.state.fileloc, 'base64');
     console.log('s1', this.props.navigation.state.params.eid, this.state);
@@ -223,72 +271,29 @@ export default class Audio extends Component {
       })
       .catch(e => console.log(e));
 
-    // fetch('http://192.168.43.218:2000/validateAttendance', {
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    //   method: 'POST',
-    //   body: data,
-    // })
-    //   .then(res => console.log(res.text()))
-    //   .catch(e => console.log(e));
-
-    // if (this.state.tokenIn && this.state.token) {
-    //   this.speechtotext();
-    // } else {
-    //   let myHeaders = new Headers();
-    //   myHeaders.append('Host', 'westus.api.cognitive.microsoft.com');
-    //   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-    //   myHeaders.append('Content-Length', 0);
-    //   myHeaders.append(
-    //     'Ocp-Apim-Subscription-Key',
-    //     'b32ce6ab77e14591aac2646405775cdf',
-    //   );
-    //   myHeaders.append('Accept', 'application/json');
-
-    //   let requestOptions = {
-    //     method: 'POST',
-    //     headers: myHeaders,
-    //     body: '',
-    //   };
-
-    //   fetch(
-    //     'https://westus.api.cognitive.microsoft.com/sts/v1.0/issueToken',
-    //     requestOptions,
-    //   )
-    //     .then(response => response.text())
-    //     .then(result => {
-    //       this.setState({token: result, tokenIn: true});
-    //       setTimeout(() => {
-    //         this.setState({tokenIn: false});
-    //       }, 540000);
-    //       console.log('s2', this.state);
-    //       this.speechtotext();
-    //     })
-    //     .catch(error => console.log('error', error));
-    // }
+    
   };
 
   renderSentence = () => {
-    arr = [
+    let arr = [
       'It is a long established fact that a reader will be distracted',
       'The readable content of a page when looking at its layout.',
       'Contrary to popular belief, Lorem Ipsum is not simply random text',
-      'Thank you for your support',
+      'Thank you for your support, Lorem Ipsum is not simply random text',
       'The standard Lorem Ipsum passage is used since the 1500s',
       'It is a long established fact that a reader will be distracted',
       'The readable content of a page when looking at its layout.',
       'Contrary to popular belief, Lorem Ipsum is not simply random text',
-      'Thank you for your support',
+      'Thank you for your support,a set of words that is complete in itself',
       'The standard Lorem Ipsum passage is used since the 1500s',
     ];
     let r = Math.floor(Math.random() * 10);
-    return arr[r];
+    console.log(arr[r],"in")
+    this.setState({sentance: arr[r]});
   };
 
   componentDidMount() {
-    // console.log(this.options);
+    this.renderSentence();
     AudioRecord.init(this.options);
     console.log('eid ', this.props.navigation.state.params.eid);
     this.setState({eid: this.props.navigation.state.params.eid});
@@ -331,11 +336,19 @@ export default class Audio extends Component {
                 fontFamily: 'Roboto',
                 fontWeight: 'bold',
                 color: 'beige',
+                textAlign: 'center'
               }}>
-              Repeat the following sentence {'\n\n\n'}
-              {this.renderSentence()}
+              Repeat the following sentence {'\n'}
             </Text>
-            <Text>{/* {this.randomsentence()} */}</Text>
+            <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: 'Roboto',
+                  fontWeight: 'bold',
+                  color: '#FF6347',
+                  textAlign: 'center'
+                }}> {this.state.sentance+"\n"}
+            </Text>
           </View>
 
           <View style={styles.recordview}>
@@ -379,9 +392,9 @@ export default class Audio extends Component {
           <View>
             <TouchableOpacity onPress={this.checkStatus} style={styles.proceed}>
               <Text style={{color: '#FF6347'}}>Proceed</Text>
-              <View>{this.renderResult()}</View>
             </TouchableOpacity>
           </View>
+          <View>{this.renderResult()}</View>
         </View>
       </View>
     );

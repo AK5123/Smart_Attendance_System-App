@@ -21,7 +21,7 @@ We propose a 4-stage pipelined solution
 * MAC address verification through Wifi network 
 * Text-Dependent Speaker Identification System
 * Depth detection for 3D mapping for Face recognition model
-[Check out the explanatory video 🚀](https://vimeo.com/458264481)
+#### [Check out the explanatory video 🚀](https://vimeo.com/458264481)
 
 ### Offline solution 
 Calls placed from registered landlines will be recorded for authentication.
